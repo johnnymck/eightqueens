@@ -85,4 +85,12 @@ defmodule Eightqueens do
       moves
     end
   end
+
+  def cull_and_replace(population, top_n_genes) do
+    size = length(population)
+    rank(population)
+    |> Enum.take(top_n_genes)
+    |> Enum.map(fn ({x, _}) -> x end)
+    |> Enum.concat(generate_initial_population((size-top_n_genes)+(round(top_n_genes/2))))
+  end
 end
