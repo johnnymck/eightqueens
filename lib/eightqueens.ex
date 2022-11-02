@@ -22,6 +22,26 @@ defmodule Eightqueens do
     for _ <- 1..size, do: generate_position()
   end
 
+  def run(population, generations) do
+    if generations <= 0 do
+      {:none_found, population}
+    else
+      winners = Enum.filter(rank(population), fn ({_, y}) -> y == 1 end)
+      if !Enum.empty?(winners) do
+        {:ok, winners}
+      else
+        run(do_simulation_step(population), generations-1)
+      end
+    end
+  end
+
+  def do_simulation_step(population) do
+    population
+    |> rank
+    |> do_n_crossover(500)
+    |> cull_and_replace(500)
+  end
+
   def rank(population) do
     population
     |> Enum.map(fn (i) -> {i, fitness(i)} end)
