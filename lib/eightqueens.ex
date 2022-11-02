@@ -34,6 +34,11 @@ defmodule Eightqueens do
     Enum.take(a, pos) ++ Enum.take(b, -(8-pos))
   end
 
+  def do_n_crossover(ranked_population, n) do
+    {a, b} = Enum.split(Enum.take(ranked_population, n), round(n/2))
+    Enum.zip_with(a, b, fn ({i, _}, {j, _}) -> crossover(i, j) end)
+  end
+
   def descretise(0) do
     1
   end
