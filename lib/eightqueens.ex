@@ -24,11 +24,11 @@ defmodule Eightqueens do
 
   def run(population, generations) do
     if generations <= 0 do
-      {:none_found, population}
+      nil
     else
       winners = Enum.filter(rank(population), fn ({_, y}) -> y == 1 end)
       if !Enum.empty?(winners) do
-        {:ok, winners}
+        winners
       else
         run(do_simulation_step(population), generations-1)
       end
